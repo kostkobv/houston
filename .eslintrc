@@ -1,0 +1,18 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "comma-dangle": [2, "never"],
+    "max-len": [2, 120, 2, {"ignoreUrls": true}],
+    "space-before-function-paren": [2, "never"],
+    "func-names": 0,
+    "strict": 0,
+    "object-shorthand": [2, "methods"],
+    "no-param-reassign": [2, {"props": false}],
+    "no-implicit-coercion": [2, {"boolean": true, "number": true, "string": true}],
+    "new-cap": [2, {"capIsNewExceptions": ["restify.CORS"]}]
+  }
+}
