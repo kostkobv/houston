@@ -4,7 +4,8 @@
   "description": "The Houston World Control Center!",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "develop": "pm2-dev houston.json"
   },
   "repository": {
     "type": "git",
@@ -15,23 +16,24 @@
     "rollbar",
     "jira"
   ],
+  "engines": {
+    "node": "5.7.0"
+  },
   "author": "Bohdan Kostko <bohdan.kostko@gmail.com>",
   "homepage": "https://bitbucket.org/bohdan_kostko/houston#readme",
   "devDependencies": {
-    "chai": "^3.5.x",
-    "eslint": "^2.2.x",
-    "eslint-config-airbnb": "^6.0.x",
-    "eslint-plugin-react": "^4.1.x",
-    "gulp": "^3.9.x",
-    "gulp-apidoc": "^0.2.x",
-    "gulp-eslint": "^2.0.x",
-    "mocha": "^2.4.x",
-    "node-notifier": "^4.5.x",
-    "pm2": "^1.0.x"
+    "chai": "3.5.x",
+    "dependable": "0.2.x",
+    "eslint": "2.2.x",
+    "eslint-config-airbnb": "6.0.x",
+    "eslint-plugin-react": "4.1.x",
+    "mocha": "2.4.x",
+    "node-notifier": "4.5.x",
+    "pm2": "1.0.x"
   },
   "dependencies": {
-    "ioredis": "^1.15.x",
-    "nconf": "^0.8.x",
-    "restify": "^4.0.x"
+    "ioredis": "1.15.x",
+    "nconf": "0.8.x",
+    "restify": "4.0.x"
   }
 }
