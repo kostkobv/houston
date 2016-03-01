@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
-    "develop": "pm2-dev houston.json"
+    "develop": "pm2-dev pm2-houston.json"
   },
   "repository": {
     "type": "git",

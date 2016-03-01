@@ -1,0 +1,19 @@
+{
+  "apps" : [
+    {
+      "name"        : "rollbar-connector",
+      "script"      : "app.js",
+      "watch"       : true,
+      "node_args"   : ["--harmony", "module", "rollbar-connector"],
+      "merge_logs"  : true,
+      "cwd"         : "./",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_tests": {
+        "NODE_ENV": "test",
+        "TEST": true
+      }
+    }
+  ]
+}
