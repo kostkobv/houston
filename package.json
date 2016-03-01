@@ -23,18 +23,17 @@
   "homepage": "https://bitbucket.org/bohdan_kostko/houston#readme",
   "devDependencies": {
     "chai": "3.5.x",
-    "commander": "2.9.x",
-    "dependable": "0.2.x",
     "eslint": "2.2.x",
     "eslint-config-airbnb": "6.0.x",
     "eslint-plugin-react": "4.1.x",
     "mocha": "2.4.x",
-    "node-notifier": "4.5.x",
     "pm2": "1.0.x"
   },
   "dependencies": {
     "ioredis": "1.15.x",
     "nconf": "0.8.x",
-    "restify": "4.0.x"
+    "restify": "4.0.x",
+    "commander": "2.9.x",
+    "dependable": "0.2.x"
   }
 }
