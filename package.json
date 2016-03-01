@@ -23,6 +23,7 @@
   "homepage": "https://bitbucket.org/bohdan_kostko/houston#readme",
   "devDependencies": {
     "chai": "3.5.x",
+    "commander": "2.9.x",
     "dependable": "0.2.x",
     "eslint": "2.2.x",
     "eslint-config-airbnb": "6.0.x",
