@@ -14,17 +14,16 @@ const globalConfig = require('./config');
  */
 class Module {
   constructor(moduleName) {
+    const config = require(`${MODULES_FOLDER}${moduleName}${MODULE_CONFIG_DIR}`);
+
     this.container = dependable.container();
 
     this.homeDir = path.resolve(__dirname, '../');
     this.modulePath = `${MODULES_FOLDER}${moduleName}${MODULE_MAIN_FILE}`;
-    this.config = require(`${MODULES_FOLDER}${moduleName}${MODULE_CONFIG_DIR}`);
 
     this.container.register('config', config);
     this.container.register('globalConfig', globalConfig);
-
-
-  },
+  }
 
   /**
    *
@@ -32,18 +31,18 @@ class Module {
    * @param path
    * @param options
    */
-  registerLibrary(name, path, options) {
-    this.container.registerLibrary(name, require(path)(options));
-  },
+  registerLibrary(name, libPath, options) {
+    this.container.registerLibrary(name, require(libPath)(options));
+  }
 
   /**
    *
    * @param path
    * @param options
    */
-  loadModule(path, options) {
-    this.container.load(`${this.homeDir}${path}`, options);
-  },
+  loadModule(modulePath, options) {
+    this.container.load(`${this.homeDir}${modulePath}`, options);
+  }
 
   /**
    *
