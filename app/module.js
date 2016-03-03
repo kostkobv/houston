@@ -139,16 +139,6 @@ class HoustonModule {
   }
 
   /**
-   * Adds to container module
-   *
-   * @param modulePath - path to module
-   * @param options - options for module
-   */
-  loadModule(modulePath, options) {
-    this.container.load(`${HOME_DIR}${modulePath}`, options);
-  }
-
-  /**
    * Adds provided file to configs bundle
    *
    * @param name - name on which file would be accessable
