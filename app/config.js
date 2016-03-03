@@ -13,7 +13,6 @@ const HOME_DIR = path.resolve(__dirname, '../');
  * @returns {Provider|*|exports|module.exports} - nconf instance
  */
 function getConfigs() {
-
   const MAIN_CONFIG_PATH = `${HOME_DIR}${GLOBAL_CONFIG_DIR_PATH}/main.json`;
   const ENV_CONFIG_PATH = `${HOME_DIR}${GLOBAL_CONFIG_DIR_PATH}/${env}.json`;
 

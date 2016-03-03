@@ -12,12 +12,13 @@ const MODULE_CONFIG_DIR = '/config';
 const HOME_DIR = path.resolve(__dirname, '../');
 
 /**
- * Class for bootstraping and injecting dependencies inside of application modules
+ * Class for bootstrapping and injecting dependencies inside of application modules
  */
 class HoustonModule {
   /**
+   * Constructor for module with provided name
    *
-   * @param moduleName
+   * @param moduleName - module name
    */
   constructor(moduleName) {
     this.modulePath = `${MODULES_PATH}/${moduleName}${MODULE_MAIN_FILE}`;
@@ -27,51 +28,59 @@ class HoustonModule {
     this.registerModuleConfigs(moduleName);
   }
 
+  /**
+   * Creates deps container
+   */
   createContainer() {
     this.container = dependable.container();
   }
 
   /**
+   * Adds provided library to module's deps container
    *
-   * @param name
-   * @param libPath
-   * @param options
+   * @param name - preferred name for lib inside of container
+   * @param libPath - path to lib
+   * @param options - options for lib
    */
   registerLibrary(name, libPath, options) {
     this.container.registerLibrary(name, require(libPath)(options));
   }
 
   /**
-   * @param modulePath
-   * @param options
+   * Adds to container module
+   *
+   * @param modulePath - path to module
+   * @param options - options for module
    */
   loadModule(modulePath, options) {
     this.container.load(`${HOME_DIR}${modulePath}`, options);
   }
 
   /**
-   * Registering module configs
+   * Registers module's configs to dependencies container
+   *
+   * @param moduleName - module name
    */
   registerModuleConfigs(moduleName) {
     try {
-      // path for module configs
-      const moduleConfigs = config();
+      const moduleConfigsBundle = config();
+      const moduleConfigsPath = `${HOME_DIR}${MODULES_PATH}/${moduleName}${MODULE_CONFIG_DIR}`;
 
-      moduleConfigs.add(`${moduleName}`, {
+      // adds local module configs to config bundle and merges default configs with env configs
+      moduleConfigsBundle.add(`${moduleName}${env.charAt(0).toUpperCase() + env.slice(1)}`, {
         type: 'file',
-        file: `${HOME_DIR}${moduleName}/main.json`
+        file: `${moduleConfigsPath}/${env}.json`
       });
 
-      // adds
-      moduleConfigs.add(`${moduleName}${env.charAt(0).toUpperCase() + env.slice(1)}`, {
+      moduleConfigsBundle.add(`${moduleName}`, {
         type: 'file',
-        file: `${HOME_DIR}${moduleName}/${env}.json`
+        file: `${moduleConfigsPath}/main.json`
       });
 
-      moduleConfigs.load();
+      moduleConfigsBundle.load();
 
-      // passing it to container
-      this.container.register('config', moduleConfigs);
+      // passing it to container as config dep
+      this.container.register('config', moduleConfigsBundle);
     } catch (error) {
       console.error(`${error.name}: Missing or broken configs (${error.message})`);
     }
