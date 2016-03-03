@@ -10,5 +10,10 @@
     {
       "name": "restify"
     }
+  ],
+  "module": [
+    "controllers",
+    "routes",
+    "services"
   ]
 }

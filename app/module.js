@@ -13,6 +13,9 @@ const MODULE_CONFIG_DIR = '/config';
 const MODULE_MAIN_FILE = '/app.js';
 const MODULE_LIBS_FILE = '/libs.json';
 
+const MODULE_LIBRARIES_LIST = 'libs';
+const MODULE_FILES_LIST = 'module';
+
 /**
  * Class for bootstrapping and injecting dependencies inside of application modules
  */
@@ -23,14 +26,16 @@ class HoustonModule {
    * @param moduleName - module name
    */
   constructor(moduleName) {
-    this.modulePath = `${MODULES_PATH}/${moduleName}${MODULE_MAIN_FILE}`;
+    this.modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
     this.moduleConfigsPath = `${HOME_DIR}${MODULES_PATH}/${moduleName}${MODULE_CONFIG_DIR}`;
+    this.libList = require(`${this.moduleConfigsPath}${MODULE_LIBS_FILE}`);
 
     this.createDependableContainer();
     this.createConfigBundle();
 
     this.registerModuleConfigs(moduleName);
     this.registerModuleLibraries();
+    this.registerModuleFiles();
   }
 
   /**
@@ -41,14 +46,26 @@ class HoustonModule {
   }
 
   /**
+   * Registers files for module basing on file passed
+   * into MODULE_LIBS_FILE(module object) and passes it to dependencies container
+   */
+  registerModuleFiles() {
+    try {
+      for (const moduleFolder of this.libList[MODULE_FILES_LIST]) {
+        this.container.load(`${this.modulePath}/${moduleFolder}`);
+      }
+    } catch (error) {
+      console.error(`${error.name}: Can't register module's files (${error.message})`);
+    }
+  }
+
+  /**
    * Registers libraries for module basing on file passed
-   * into MODULE_LIBS_FILE and passes it to dependencies container
+   * into MODULE_LIBS_FILE(libs object) and passes it to dependencies container
    */
   registerModuleLibraries() {
-    const libList = require(`${this.moduleConfigsPath}${MODULE_LIBS_FILE}`);
-
     try {
-      for (const lib of libList.libs) {
+      for (const lib of this.libList[MODULE_LIBRARIES_LIST]) {
         this.registerLibrary(lib.name, lib.path || lib.name, lib.options);
       }
     } catch (error) {
@@ -171,7 +188,7 @@ class HoustonModule {
    * Passes the module to container and runs it
    */
   init() {
-    const module = require(`${HOME_DIR}${this.modulePath}`);
+    const module = require(`${this.modulePath}${MODULE_MAIN_FILE}`);
     this.container.resolve(module);
   }
 }
