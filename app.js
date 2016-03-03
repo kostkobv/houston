@@ -1,7 +1,7 @@
 'use strict';
 
 const commander = require('commander');
-const Module = require('./app/dependencies.js');
+const appModule = require('./app/module.js');
 
 commander
   .version('1.0.0', null)
@@ -11,13 +11,21 @@ commander
   .command('module [module-name]')
   .description('run module')
   .action((moduleName) => {
-    const module = new Module(moduleName);
-    module.instance.init();
+    try {
+      if (!moduleName) {
+        throw new Error('module-name is not provided');
+      }
+
+      appModule.getModule(moduleName).init();
+    } catch (error) {
+      console.error(`${error.name}: ${error.message}`);
+    }
+
   });
 
 commander.parse(process.argv);
 
 // Show help if no command provided
-if (!process.argv.slice(2)) {
+if (process.argv.length < 3) {
   commander.outputHelp();
 }
