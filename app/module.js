@@ -26,33 +26,33 @@ class HoustonModule {
    * @param moduleName - module name
    */
   constructor(moduleName) {
-    this.modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
-    this.moduleConfigsPath = `${HOME_DIR}${MODULES_PATH}/${moduleName}${MODULE_CONFIG_DIR}`;
-    this.libList = require(`${this.moduleConfigsPath}${MODULE_LIBS_FILE}`);
+    this._modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
+    this._moduleConfigsPath = `${HOME_DIR}${MODULES_PATH}/${moduleName}${MODULE_CONFIG_DIR}`;
+    this._libList = require(`${this._moduleConfigsPath}${MODULE_LIBS_FILE}`);
 
-    this.createDependableContainer();
-    this.createConfigBundle();
+    this._createDependableContainer();
+    this._createConfigBundle();
 
-    this.registerModuleConfigs(moduleName);
-    this.registerModuleLibraries();
-    this.registerModuleFiles();
+    this._registerModuleConfigs(moduleName);
+    this._registerModuleLibraries();
+    this._registerModuleFiles();
   }
 
   /**
    * Creates config bundle based on nconf and with global config already inside of it
    */
-  createConfigBundle() {
-    this.moduleConfigsBundle = config();
+  _createConfigBundle() {
+    this._moduleConfigsBundle = config();
   }
 
   /**
    * Registers files for module basing on file passed
    * into MODULE_LIBS_FILE(module object) and passes it to dependencies container
    */
-  registerModuleFiles() {
+  _registerModuleFiles() {
     try {
-      for (const moduleFolder of this.libList[MODULE_FILES_LIST]) {
-        this.container.load(`${this.modulePath}/${moduleFolder}`);
+      for (const moduleFolder of this._libList[MODULE_FILES_LIST]) {
+        this._container.load(`${this._modulePath}/${moduleFolder}`);
       }
     } catch (error) {
       console.error(`${error.name}: Can't register module's files (${error.message})`);
@@ -63,10 +63,10 @@ class HoustonModule {
    * Registers libraries for module basing on file passed
    * into MODULE_LIBS_FILE(libs object) and passes it to dependencies container
    */
-  registerModuleLibraries() {
+  _registerModuleLibraries() {
     try {
-      for (const lib of this.libList[MODULE_LIBRARIES_LIST]) {
-        this.registerLibrary(lib.name, lib.path || lib.name, lib.options);
+      for (const lib of this._libList[MODULE_LIBRARIES_LIST]) {
+        this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
       }
     } catch (error) {
       console.log(`${error.name}: can't register libraries (${error.message})`);
@@ -76,8 +76,8 @@ class HoustonModule {
   /**
    * Creates dependency container
    */
-  createDependableContainer() {
-    this.container = dependable.container();
+  _createDependableContainer() {
+    this._container = dependable.container();
   }
 
   /**
@@ -87,15 +87,15 @@ class HoustonModule {
    * @param libPath - path to lib
    * @param options - options for lib
    */
-  registerLibrary(name, libPath, options) {
+  _registerLibrary(name, libPath, options) {
     let lib = require(libPath);
 
     if (options) {
-      const parsedOption = this.parseOptions(options);
+      const parsedOption = this._parseOptions(options);
       lib = lib(parsedOption);
     }
 
-    this.container.register(name, lib);
+    this._container.register(name, lib);
   }
 
   /**
@@ -104,13 +104,13 @@ class HoustonModule {
    * @param options - options that should be parsed
    * @returns {*} - parsed options
    */
-  parseOptions(options) {
+  _parseOptions(options) {
     // TODO: use here destructuring after migration to Node 6
-    for (const option of this.optionsIterator(options)) {
+    for (const option of this._optionsIterator(options)) {
       const key = option[0];
       const value = option[1];
 
-      options[key] = this.getFromGlobalConfig(value);
+      options[key] = this._getFromGlobalConfig(value);
     }
 
     return options;
@@ -123,8 +123,8 @@ class HoustonModule {
    * @param value - string in which data should be pasted
    * @returns {string|*} - string with replaced data
    */
-  getFromGlobalConfig(value) {
-    return value.replace(/\$\{(.*?)\}/mg, (match, key) => this.moduleConfigsBundle.get(key) || match);
+  _getFromGlobalConfig(value) {
+    return value.replace(/\$\{(.*?)\}/mg, (match, key) => this._moduleConfigsBundle.get(key) || match);
   }
 
   /**
@@ -132,7 +132,7 @@ class HoustonModule {
    *
    * @param options - options object for which iterator should be created
    */
-  *optionsIterator(options) {
+  *_optionsIterator(options) {
     for (const key of Object.keys(options)) {
       yield [key, options[key]];
     }
@@ -144,8 +144,8 @@ class HoustonModule {
    * @param name - name on which file would be accessable
    * @param file - absolute path to file
    */
-  addConfigsFileToBundle(name, file) {
-    this.moduleConfigsBundle.add(name, {
+  _addConfigsFileToBundle(name, file) {
+    this._moduleConfigsBundle.add(name, {
       type: 'file',
       file
     });
@@ -156,21 +156,19 @@ class HoustonModule {
    *
    * @param moduleName - module name
    */
-  registerModuleConfigs(moduleName) {
+  _registerModuleConfigs(moduleName) {
     try {
       // adds local module configs to config bundle and merges default configs with env configs
-      this.addConfigsFileToBundle(
+      this._addConfigsFileToBundle(
         `${moduleName}${env.charAt(0).toUpperCase() + env.slice(1)}`,
-        `${this.moduleConfigsPath}/${env}.json`);
+        `${this._moduleConfigsPath}/${env}.json`);
 
-      this.addConfigsFileToBundle(`${moduleName}`, `${this.moduleConfigsPath}/main.json`);
+      this._addConfigsFileToBundle(`${moduleName}`, `${this._moduleConfigsPath}/main.json`);
 
-      this.moduleConfigsBundle.load();
-
-      console.log(this.moduleConfigsBundle);
+      this._moduleConfigsBundle.load();
 
       // passing it to container as config dep
-      this.container.register('config', this.moduleConfigsBundle);
+      this._container.register('config', this._moduleConfigsBundle);
     } catch (error) {
       console.error(`${error.name}: Missing or broken configs (${error.message})`);
     }
@@ -180,8 +178,8 @@ class HoustonModule {
    * Passes the module to container and runs it
    */
   init() {
-    const module = require(`${this.modulePath}${MODULE_MAIN_FILE}`);
-    this.container.resolve(module);
+    const module = require(`${this._modulePath}${MODULE_MAIN_FILE}`);
+    this._container.resolve(module);
   }
 }
 
