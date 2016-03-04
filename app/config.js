@@ -5,7 +5,7 @@ const path = require('path');
 const env = process.env.NODE_ENV || 'development';
 
 const GLOBAL_CONFIG_DIR_PATH = '/config';
-const HOME_DIR = path.resolve(__dirname, '../');
+const PROJECT_DIR = path.resolve(__dirname, '../');
 
 /**
  * Creates a config instance with globalConfigs within
@@ -13,8 +13,8 @@ const HOME_DIR = path.resolve(__dirname, '../');
  * @returns {Provider|*|exports|module.exports} - nconf instance
  */
 function getConfigs() {
-  const MAIN_CONFIG_PATH = `${HOME_DIR}${GLOBAL_CONFIG_DIR_PATH}/main.json`;
-  const ENV_CONFIG_PATH = `${HOME_DIR}${GLOBAL_CONFIG_DIR_PATH}/${env}.json`;
+  const MAIN_CONFIG_PATH = `${PROJECT_DIR}${GLOBAL_CONFIG_DIR_PATH}/main.json`;
+  const ENV_CONFIG_PATH = `${PROJECT_DIR}${GLOBAL_CONFIG_DIR_PATH}/${env}.json`;
 
   config.argv().env();
 

@@ -4,9 +4,9 @@
   "description": "The Houston World Control Center!",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "NODE_ENV='test' mocha",
     "develop": "pm2-dev pm2-houston.json",
-    "lint": "eslint ./app/**/*.js ./modules/**/*.js"
+    "lint": "eslint ./app/**/*.js ./modules/**/*.js ./test/**/*.js"
   },
   "repository": {
     "type": "git",

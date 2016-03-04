@@ -105,7 +105,7 @@ class HoustonModule {
    * @returns {*} - parsed options
    */
   parseOptions(options) {
-    // TODO: use here spread operator after migration to Node 6
+    // TODO: use here destructuring after migration to Node 6
     for (const option of this.optionsIterator(options)) {
       const key = option[0];
       const value = option[1];
@@ -166,6 +166,8 @@ class HoustonModule {
       this.addConfigsFileToBundle(`${moduleName}`, `${this.moduleConfigsPath}/main.json`);
 
       this.moduleConfigsBundle.load();
+
+      console.log(this.moduleConfigsBundle);
 
       // passing it to container as config dep
       this.container.register('config', this.moduleConfigsBundle);
