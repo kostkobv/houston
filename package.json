@@ -4,9 +4,10 @@
   "description": "The Houston World Control Center!",
   "main": "app.js",
   "scripts": {
-    "test": "NODE_ENV='test' mocha",
-    "develop": "pm2-dev pm2-houston.json",
-    "lint": "eslint ./app/**/*.js ./modules/**/*.js ./test/**/*.js"
+    "test": "NODE_ENV='test' ./node_modules/.bin/mocha",
+    "develop": "./node_modules/.bin/pm2-dev pm2-houston.json",
+    "lint": "./node_modules/.bin/eslint ./app/**/*.js ./modules/**/*.js ./test/**/*.js",
+    "docs": "./node_modules/.bin/jsdoc ./app ./modules ./app.js -d ./docs"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "eslint": "2.2.x",
     "eslint-config-airbnb": "6.0.x",
     "eslint-plugin-react": "4.1.x",
+    "jsdoc": "3.4.x",
     "mocha": "2.4.x",
     "pm2": "1.0.x"
   },
