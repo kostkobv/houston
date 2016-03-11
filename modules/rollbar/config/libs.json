@@ -9,6 +9,10 @@
     },
     {
       "name": "restify"
+    },
+    {
+      "name": "log",
+      "path": "winston"
     }
   ],
   "module": [

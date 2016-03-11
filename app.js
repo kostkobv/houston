@@ -2,6 +2,7 @@
 
 const commander = require('commander');
 const appModule = require('./app/module.js');
+const log = require('winston');
 
 commander
   .version('1.0.0', null)
@@ -14,7 +15,7 @@ commander
     try {
       appModule.getModule(moduleName).init();
     } catch (error) {
-      console.error(`${error.name}: ${error.message}`);
+      log.error(error.name, error.message);
     }
   });
 

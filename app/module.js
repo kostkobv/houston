@@ -2,6 +2,7 @@
 
 const dependable = require('dependable');
 const path = require('path');
+const log = require('winston');
 
 const config = require('./config.js');
 const env = process.env.NODE_ENV || 'development';
@@ -34,7 +35,7 @@ class HoustonModule {
     try {
       this._libList = require(`${this._moduleConfigsPath}${MODULE_LIBS_FILE}`);
     } catch (error) {
-      console.log(`${error.name}: Module does not have dependency file (${error.message})`);
+      log.info(error.name, `Module does not have dependency file (${error.message})`);
     }
 
 
@@ -63,7 +64,7 @@ class HoustonModule {
         this._container.load(`${this._modulePath}/${moduleFolder}`);
       }
     } catch (error) {
-      console.error(`${error.name}: Can't register module's files (${error.message})`);
+      log.error(error.name, `Can't register module's files (${error.message})`);
     }
   }
 
@@ -77,7 +78,7 @@ class HoustonModule {
         this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
       }
     } catch (error) {
-      console.log(`${error.name}: Can't register libraries (${error.message})`);
+      log.error(error.name, `Can't register libraries (${error.message})`);
     }
   }
 
@@ -178,7 +179,7 @@ class HoustonModule {
       // passing it to container as config dep
       this._container.register('config', this._moduleConfigsBundle);
     } catch (error) {
-      console.error(`${error.name}: Missing or broken configs (${error.message})`);
+      log.error(error.name, `Missing or broken configs (${error.message})`);
     }
   }
 

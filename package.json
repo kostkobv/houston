@@ -31,10 +31,11 @@
     "pm2": "1.0.x"
   },
   "dependencies": {
+    "commander": "2.9.x",
+    "dependable": "0.2.x",
     "ioredis": "1.15.x",
     "nconf": "0.8.x",
     "restify": "4.0.x",
-    "commander": "2.9.x",
-    "dependable": "0.2.x"
+    "winston": "2.2.x"
   }
 }
