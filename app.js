@@ -12,15 +12,10 @@ commander
   .description('run module')
   .action((moduleName) => {
     try {
-      if (!moduleName) {
-        throw new Error('module-name is not provided');
-      }
-
       appModule.getModule(moduleName).init();
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
     }
-
   });
 
 commander.parse(process.argv);

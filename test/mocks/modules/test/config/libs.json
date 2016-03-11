@@ -1,0 +1,14 @@
+{
+  "libs": [
+    {
+      "name": "ioredis",
+      "options": {
+        "port": "${redis:port}",
+        "host": "${redis:host}"
+      }
+    }
+  ],
+  "module": [
+    "services"
+  ]
+}

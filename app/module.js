@@ -24,11 +24,19 @@ class HoustonModule {
    * Constructor for module with provided name
    *
    * @param moduleName - module name
+   * @param modulePath - path where module is located. Default value is ${HOME_DIR}${MODULES_PATH}/${moduleName}
    */
-  constructor(moduleName) {
-    this._modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
-    this._moduleConfigsPath = `${HOME_DIR}${MODULES_PATH}/${moduleName}${MODULE_CONFIG_DIR}`;
-    this._libList = require(`${this._moduleConfigsPath}${MODULE_LIBS_FILE}`);
+  constructor(moduleName, modulePath) {
+    // TODO: change to default function value after upgrade to Node 6
+    this._modulePath = modulePath || `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
+    this._moduleConfigsPath = `${this._modulePath}${MODULE_CONFIG_DIR}`;
+
+    try {
+      this._libList = require(`${this._moduleConfigsPath}${MODULE_LIBS_FILE}`);
+    } catch (error) {
+      console.log(`${error.name}: Module does not have dependency file (${error.message})`);
+    }
+
 
     this._createDependableContainer();
     this._createConfigBundle();
@@ -69,7 +77,7 @@ class HoustonModule {
         this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
       }
     } catch (error) {
-      console.log(`${error.name}: can't register libraries (${error.message})`);
+      console.log(`${error.name}: Can't register libraries (${error.message})`);
     }
   }
 
@@ -105,7 +113,7 @@ class HoustonModule {
    * @returns {*} - parsed options
    */
   _parseOptions(options) {
-    // TODO: use here destructuring after migration to Node 6
+    // TODO: use destructuring here after migration to Node 6
     for (const option of this._optionsIterator(options)) {
       const key = option[0];
       const value = option[1];
@@ -184,7 +192,11 @@ class HoustonModule {
 }
 
 module.exports = {
-  getModule(moduleName) {
-    return new HoustonModule(moduleName);
+  getModule(moduleName, modulePath) {
+    if (!moduleName || typeof moduleName !== 'string') {
+      throw new Error('module-name is invalid');
+    }
+
+    return new HoustonModule(moduleName, modulePath);
   }
 };
