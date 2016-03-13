@@ -9,7 +9,7 @@ commander
   .description('World Control Center named Houston by MobileBridge');
 
 commander
-  .command('module [module-name]')
+  .command('module <module-name>')
   .description('run module')
   .action((moduleName) => {
     try {

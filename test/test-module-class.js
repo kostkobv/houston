@@ -90,11 +90,23 @@ describe('Module', () => {
 
       return expect(moduleContainer.get('ioredis')).not.to.be.undefined;
     });
+
     it('should have all parts of module injected', () => {
       const testModule = appModule.getModule('test', TEST_MODULE_DIR);
       const moduleContainer = testModule._container;
 
       return expect(moduleContainer.get('testService')).not.to.be.undefined;
+    });
+
+    it('should replace keys from global config basing on ${key:subkey:...} template', () => {
+      const testModule = appModule.getModule('test', TEST_MODULE_DIR);
+      const retrievedValue = testModule._moduleConfigsBundle.get('redis');
+
+      const parsedOptions = testModule._parseOptions({
+        example: '${redis}'
+      });
+
+      expect(parsedOptions.example).to.be.equal(`${retrievedValue}`);
     });
   });
 });

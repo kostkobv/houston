@@ -97,6 +97,10 @@ class HoustonModule {
    * @param options - options for lib
    */
   _registerLibrary(name, libPath, options) {
+    if (!name) {
+      throw new Error('Some of the libraries don\'t have the name.');
+    }
+
     let lib = require(libPath);
 
     if (options) {
@@ -133,7 +137,10 @@ class HoustonModule {
    * @returns {string|*} - string with replaced data
    */
   _getFromGlobalConfig(value) {
-    return value.replace(/\$\{(.*?)\}/mg, (match, key) => this._moduleConfigsBundle.get(key) || match);
+    return value.replace(/\$\{(.*?)\}/mg, (match, key) => {
+      const retrievedValue = this._moduleConfigsBundle.get(key);
+      return typeof retrievedValue !== 'undefined' ? retrievedValue : match;
+    });
   }
 
   /**
