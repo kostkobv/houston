@@ -2,11 +2,8 @@
 
 module.exports = function(log) {
   return function(req, res, next) {
-    log.info(`Got webhook with data ${req.body}`);
-    res.send({
-      status: 'ok'
-    });
-
+    log.info(`Triggered Rollbar Webhook (${req.body.event_name})`);
+    res.send(200);
     next();
   };
 };
