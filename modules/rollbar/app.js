@@ -8,7 +8,7 @@ module.exports = function(config, log, restify, routes) {
 
   routes.registerRoutes(server);
 
-  server.listen(config.get('server-port'), () => {
+  server.listen(config.get('PORT'), () => {
     log.info(`Rollbar server (${server.name}) is up and listening at ${server.url}`);
   });
 };
