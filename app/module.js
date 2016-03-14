@@ -59,12 +59,12 @@ class HoustonModule {
    * into MODULE_LIBS_FILE(module object) and passes it to dependencies container
    */
   _registerModuleFiles() {
-    try {
-      for (const moduleFolder of this._libList[MODULE_FILES_LIST]) {
+    for (const moduleFolder of this._libList[MODULE_FILES_LIST]) {
+      try {
         this._container.load(`${this._modulePath}/${moduleFolder}`);
+      } catch (error) {
+        log.error(error.name, `Can't register module's files (${error.message})`);
       }
-    } catch (error) {
-      log.error(error.name, `Can't register module's files (${error.message})`);
     }
   }
 
