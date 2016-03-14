@@ -18,7 +18,7 @@ const MODULE_LIBRARIES_LIST = 'libs';
 const MODULE_FILES_LIST = 'module';
 
 /**
- * Class for bootstrapping and injecting dependencies inside of application modules
+ * Class for retrieving and injecting dependencies inside of application modules
  */
 class HoustonModule {
   /**
@@ -155,9 +155,9 @@ class HoustonModule {
   }
 
   /**
-   * Adds provided file to configs bundle
+   * Adds provided file to module's configs bundle
    *
-   * @param name - name on which file would be accessable
+   * @param name - name on which file would be accessible
    * @param file - absolute path to file
    */
   _addConfigsFileToBundle(name, file) {
@@ -191,7 +191,7 @@ class HoustonModule {
   }
 
   /**
-   * Passes the module to container and runs it
+   * Passes the module's main file to container and runs it
    */
   init() {
     const module = require(`${this._modulePath}${MODULE_MAIN_FILE}`);
