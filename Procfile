@@ -1,0 +1,1 @@
+web: NODE_ENV="staging" node app module rollbar
