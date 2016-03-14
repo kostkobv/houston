@@ -1,13 +1,3 @@
 {
-  "libs": [
-    {
-      "name": "",
-      "options": {
-
-      },
-      "global": {
-
-      }
-    }
-  ]
+  "server-port": 8121
 }
