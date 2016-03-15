@@ -178,16 +178,20 @@ class HoustonModule {
       this._addConfigsFileToBundle(
         `${moduleName}${env.charAt(0).toUpperCase() + env.slice(1)}`,
         `${this._moduleConfigsPath}/${env}.json`);
-
-      this._addConfigsFileToBundle(`${moduleName}`, `${this._moduleConfigsPath}/main.json`);
-
-      this._moduleConfigsBundle.load();
-
-      // passing it to container as config dep
-      this._container.register('config', this._moduleConfigsBundle);
     } catch (error) {
-      log.error(error.name, `Missing or broken configs (${error.message})`);
+      log.error(error.name, `Missing or broken env configuration file (${error.message})`);
     }
+
+    try {
+      this._addConfigsFileToBundle(`${moduleName}`, `${this._moduleConfigsPath}/main.json`);
+    } catch (error) {
+      log.error(error.name, `Missing or broken main module configuration file (${error.message})`);
+    }
+
+    this._moduleConfigsBundle.load();
+
+    // passing it to container as config dep
+    this._container.register('config', this._moduleConfigsBundle);
   }
 
   /**
