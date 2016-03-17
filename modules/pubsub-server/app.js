@@ -6,7 +6,7 @@ module.exports = function(log, faye, http, config) {
 
   // creating server and faye node adapter
   const server = http.createServer();
-  const bayeux = new faye.NodeAdapter(
+  const fayeAdapter = new faye.NodeAdapter(
     {
       mount: SERVER_MOUNT,
       timeout: 45
@@ -14,7 +14,7 @@ module.exports = function(log, faye, http, config) {
   );
 
   // running the server and attaching faye to it
-  bayeux.attach(server);
+  fayeAdapter.attach(server);
   server.listen(PORT);
 
   log.info(`Pubsub server is up on port ${PORT} and mounted on ${SERVER_MOUNT}`);

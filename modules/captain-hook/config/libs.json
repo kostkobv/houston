@@ -8,15 +8,11 @@
       }
     },
     {
-      "name": "restify"
-    },
-    {
       "name": "log",
       "path": "winston"
     },
-    {
-      "name": "faye"
-    }
+    "restify",
+    "faye"
   ],
   "module": [
     "controllers",

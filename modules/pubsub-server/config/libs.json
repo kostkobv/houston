@@ -4,12 +4,8 @@
       "name": "log",
       "path": "winston"
     },
-    {
-      "name": "faye"
-    },
-    {
-      "name": "http"
-    }
+    "faye",
+    "http"
   ],
   "module": [
 

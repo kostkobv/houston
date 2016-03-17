@@ -75,7 +75,11 @@ class HoustonModule {
   _registerModuleLibraries() {
     try {
       for (const lib of this._libList[MODULE_LIBRARIES_LIST]) {
-        this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
+        if (typeof lib === 'string') {
+          this._registerLibrary(lib, lib);
+        } else {
+          this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
+        }
       }
     } catch (error) {
       log.error(error.name, `Can't register libraries (${error.message})`);

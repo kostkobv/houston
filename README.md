@@ -80,8 +80,9 @@ be injected as `redis`). If `path` is not provided the `name` value would be use
 can be provided for initializing the module with specific options (basically if the options value is provided, 
 instead of injecting the `require(moduleName)` it will inject `require(moduleName)(options)`). The data from global 
 configuration could be imported to keep the configs consistent with `${key:subkey:...}` template. If the key doesn't 
-exist in the global config the injected value won't be changed. (check the example of `libs.json` 
-file in `test/mocks/modules/test/config/`). 
+exist in the global config the injected value won't be changed. Also you can pass the dependency just as string, not an 
+object (like just "http", "winston", "restify" and etc) (check the example of `libs.json` file in 
+`test/mocks/modules/test/config/`). 
 
 Module folders should be specified in `libs.json` as value of `module` key for proper injection. Please try to
 keep the modules simple and not to create nesting deeper then one level inside of module folders. The access 

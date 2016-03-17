@@ -6,7 +6,8 @@
         "port": "${redis:port}",
         "host": "${redis:host}"
       }
-    }
+    },
+    "http"
   ],
   "module": [
     "services"
