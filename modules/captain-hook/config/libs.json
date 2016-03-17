@@ -13,10 +13,14 @@
     {
       "name": "log",
       "path": "winston"
+    },
+    {
+      "name": "faye"
     }
   ],
   "module": [
     "controllers",
-    "routes"
+    "routes",
+    "helpers"
   ]
 }

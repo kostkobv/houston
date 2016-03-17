@@ -9,6 +9,6 @@ module.exports = function(config, log, restify, routes) {
   routes.registerRoutes(server);
 
   server.listen(config.get('PORT'), () => {
-    log.info(`Rollbar server (${server.name}) is up and listening at ${server.url}`);
+    log.info(`Captain hook (based on ${server.name}) is on deck and listening at ${server.url}, argghhh`);
   });
 };

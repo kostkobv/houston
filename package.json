@@ -35,6 +35,7 @@
   "dependencies": {
     "commander": "2.9.x",
     "dependable": "0.2.x",
+    "faye": "1.1.x",
     "ioredis": "1.15.x",
     "nconf": "0.8.x",
     "restify": "4.0.x",

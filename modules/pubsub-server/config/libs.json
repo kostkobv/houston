@@ -1,0 +1,17 @@
+{
+  "libs": [
+    {
+      "name": "log",
+      "path": "winston"
+    },
+    {
+      "name": "faye"
+    },
+    {
+      "name": "http"
+    }
+  ],
+  "module": [
+
+  ]
+}
