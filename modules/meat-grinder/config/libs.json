@@ -1,0 +1,23 @@
+{
+  "libs": [
+    {
+      "name": "ioredis",
+      "options": {
+        "port": "${redis:port}",
+        "host": "${redis:host}"
+      }
+    },
+    {
+      "name": "log",
+      "path": "winston"
+    },
+    "os",
+    {
+      "name": "seneca",
+      "options": {}
+    }
+  ],
+  "module": [
+    "parsers"
+  ]
+}
