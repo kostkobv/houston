@@ -14,21 +14,6 @@
         "NODE_ENV": "test",
         "TEST": true
       }
-    },
-    {
-      "name"        : "pubsub-server",
-      "script"      : "app.js",
-      "watch"       : true,
-      "node_args"   : ["--debug=5859", "app.js", "module", "pubsub-server"],
-      "merge_logs"  : true,
-      "cwd"         : "./",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "env_tests": {
-        "NODE_ENV": "test",
-        "TEST": true
-      }
     }
   ]
 }

@@ -11,8 +11,7 @@
       "name": "log",
       "path": "winston"
     },
-    "restify",
-    "faye"
+    "restify"
   ],
   "module": [
     "controllers",
