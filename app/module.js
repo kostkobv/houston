@@ -38,7 +38,6 @@ class HoustonModule {
       log.info(error.name, `Module does not have dependency file (${error.message})`);
     }
 
-
     this._createDependableContainer();
     this._createConfigBundle();
 
@@ -59,6 +58,11 @@ class HoustonModule {
    * into MODULE_LIBS_FILE(module object) and passes it to dependencies container
    */
   _registerModuleFiles() {
+    if (!this._libList[MODULE_FILES_LIST]) {
+      log.info('Module additional files not registered.');
+      return;
+    }
+
     for (const moduleFolder of this._libList[MODULE_FILES_LIST]) {
       try {
         this._container.load(`${this._modulePath}/${moduleFolder}`);
