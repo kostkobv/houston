@@ -1,15 +1,12 @@
 {
   "libs": [
     {
-      "name": "ioredis",
-      "options": {
-        "port": "${redis:port}",
-        "host": "${redis:host}"
-      }
-    },
-    {
       "name": "log",
       "path": "winston"
+    },
+    {
+      "name": "seneca",
+      "options": {}
     },
     "restify"
   ],

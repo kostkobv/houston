@@ -1,7 +1,7 @@
 {
   "name": "houston",
   "version": "1.0.0",
-  "description": "The Houston World Control Center!",
+  "description": "The Houston World Monitoring System!",
   "main": "app.js",
   "scripts": {
     "test": "NODE_ENV='test' ./node_modules/.bin/mocha",
@@ -39,6 +39,7 @@
     "nconf": "0.8.x",
     "restify": "4.0.x",
     "seneca": "2.0.x",
+    "seneca-redis-transport": "0.3.x",
     "winston": "2.2.x"
   }
 }
