@@ -80,21 +80,21 @@ describe('Module', () => {
       expect(envModuleConfigFilePath).to.be.equal(`${TEST_MODULE_DIR}/config/test.json`);
     });
 
-    it('should merge the env configs over the main configs', () => {
-      return expect(this.testModule._moduleConfigsBundle.get('test')).to.be.true;
-    });
+    it('should merge the env configs over the main configs', () => expect(
+      this.testModule._moduleConfigsBundle.get('test')).to.be.true
+    );
 
-    it('should have all libs of module injected', () => {
-      return expect(this.testModule._container.get('ioredis')).not.to.be.undefined;
-    });
+    it('should have all libs of module injected', () => expect(
+      this.testModule._container.get('ioredis')).not.to.be.undefined
+    );
 
-    it('should import lib from libs.json if its passed as string', () => {
-      return expect(this.testModule._container.get('http')).not.to.be.undefined;
-    });
+    it('should import lib from libs.json if its passed as string', () => expect(
+      this.testModule._container.get('http')).not.to.be.undefined
+    );
 
-    it('should have all parts of module injected', () => {
-      return expect(this.testModule._container.get('testService')).not.to.be.undefined;
-    });
+    it('should have all parts of module injected', () => expect(
+      this.testModule._container.get('testService')).not.to.be.undefined
+    );
 
     it('should replace keys from global config basing on ${key:subkey:...} template', () => {
       const retrievedValue = this.testModule._moduleConfigsBundle.get('redis');
