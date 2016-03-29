@@ -132,8 +132,8 @@ describe('Captain Hook', () => {
               .post('/rollbar/webhook')
               .send(ROLLBAR_DATA)
               .expect(204)
-              .end((err) => {
-                expect(err).to.be.equal(null);
+              .end((error) => {
+                expect(error).to.be.equal(null);
               });
           });
       });
