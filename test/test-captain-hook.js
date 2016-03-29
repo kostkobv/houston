@@ -90,6 +90,7 @@ describe('Captain Hook', () => {
   it('should create server on port retrieved from config', (done) => {
     this.request
       .get('/')
+      // for now we don't have anything on root
       .expect(404)
       .end((err) => {
         expect(err).to.be.equal(null);
@@ -113,13 +114,17 @@ describe('Captain Hook', () => {
       });
 
       it('should be connected to seneca and trigger an event in pubsub', (done) => {
+        const PARSER = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:name');
+        const ROLLBAR = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:rollbar');
+        const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('routes:rollbar:webhook');
+
         seneca
           .use('redis-transport')
           .listen({
             type: 'redis',
-            pin: 'parser:rollbar'
+            pin: `role:${PARSER}`
           })
-          .add('parser:rollbar', (args, respond) => {
+          .add(`role:${PARSER},source:${ROLLBAR}`, (args, respond) => {
             expect(args.data).to.deep.equal(ROLLBAR_DATA);
             respond(null);
             seneca.close();
@@ -129,7 +134,7 @@ describe('Captain Hook', () => {
             expect(err).to.be.equal(undefined);
 
             this.request
-              .post('/rollbar/webhook')
+              .post(ROLLBAR_WEBHOOK_PATH)
               .send(ROLLBAR_DATA)
               .expect(204)
               .end((error) => {

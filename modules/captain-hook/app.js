@@ -12,6 +12,8 @@
  * @param seneca
  */
 module.exports = function(config, log, restify, routes, seneca) {
+  const PARSER_CHANNEL_NAME = config.get('pubsub:channels:parser:name');
+
   // creates restify server
   const server = restify.createServer();
   server.use(restify.bodyParser());
@@ -24,11 +26,11 @@ module.exports = function(config, log, restify, routes, seneca) {
     log.info(`Captain hook (based on ${server.name}) is on deck and listening at ${server.url}, argghhh`);
   });
 
-  // registers to seneca pubsub as publisher for 'parser:*' channel (meat-grinder)
+  // registers to seneca pubsub as publisher for 'role:parser' channel (meat-grinder)
   seneca
     .use('redis-transport')
     .client({
       type: 'redis',
-      pin: 'parser:*'
+      pin: `role:${PARSER_CHANNEL_NAME},source:*`
     });
 };

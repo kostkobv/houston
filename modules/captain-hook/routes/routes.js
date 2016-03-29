@@ -6,7 +6,7 @@
  * @param rollbarController
  * @returns {{registerRoutes: (function(*))}}
  */
-module.exports = function(rollbarController) {
+module.exports = function(rollbarController, config) {
   return {
     /**
      * Registers routes for all webhook services
@@ -14,7 +14,7 @@ module.exports = function(rollbarController) {
      * @param server - server instance
      */
     registerRoutes(server) {
-      server.post('/rollbar/webhook', rollbarController);
+      server.post(config.get('routes:rollbar:webhook'), rollbarController);
     }
   };
 };

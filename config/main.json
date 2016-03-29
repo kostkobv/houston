@@ -4,9 +4,11 @@
     "port": "6379"
   },
   "pubsub": {
-    "port": 8000,
-    "mount": "/pubsub",
-    "host": "localhost",
-    "fullAddress": "http://localhost:8000/pubsub"
+    "channels": {
+      "parser": {
+        "name": "parser",
+        "rollbar": "rollbar"
+      }
+    }
   }
 }
