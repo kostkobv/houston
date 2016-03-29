@@ -17,7 +17,7 @@ module.exports = function(log, config, seneca) {
      * @param data - data itself
      */
     grind(source, data) {
-      seneca.act( { 'parser': source, 'data': data },
+      seneca.act( { parser: source, data },
         (err) => {
           if (err) {
             log.error(err);

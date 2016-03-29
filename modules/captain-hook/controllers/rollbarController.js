@@ -8,13 +8,25 @@
  * @returns {Function} - controller itself
  */
 module.exports = function(log, meatGrinderCommunicator) {
+  /**
+   * Passes the request body to meat-grinder
+   *
+   * @param body - request body
+   */
+  function proceedRequest(body){
+    log.info(`Triggered Rollbar Webhook (${body.event_name})`);
+
+    // pass the data to grinder through pubsub
+    meatGrinderCommunicator.grind('rollbar', body);
+  }
+
   return function(req, res, next) {
-    log.info(`Triggered Rollbar Webhook (${req.body.event_name})`);
+    if (req.body) {
+      proceedRequest(req.body);
+    }
+
     // no content here
     res.send(204);
     next();
-
-    // pass the data to grinder through pubsub
-    meatGrinderCommunicator.grind('rollbar', req.body);
   };
 };

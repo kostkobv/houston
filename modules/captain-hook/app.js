@@ -1,6 +1,4 @@
-/**
- * Created by bv on 01/03/16.
- */
+'use strict';
 
 /**
  * Captain Hook is a module which has a web server and listens for triggered webhooks.

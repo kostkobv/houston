@@ -30,7 +30,8 @@
     "eslint-plugin-react": "4.1.x",
     "jsdoc": "3.4.x",
     "mocha": "2.4.x",
-    "pm2": "1.0.x"
+    "pm2": "1.0.x",
+    "supertest": "1.2.x"
   },
   "dependencies": {
     "commander": "2.9.x",
