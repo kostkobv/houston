@@ -12,7 +12,7 @@
     "strict": 0,
     "object-shorthand": [2, "methods"],
     // TODO: set to error level (2) after update to Node 6
-    "no-param-reassign": [2, {"props": false}],
+    "no-param-reassign": [0, {"props": false}],
     "no-implicit-coercion": [2, {"boolean": true, "number": true, "string": true}],
     "new-cap": [2, {"capIsNewExceptions": ["restify.CORS"]}]
   }

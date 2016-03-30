@@ -7,7 +7,9 @@
     "channels": {
       "parser": {
         "name": "parser",
-        "rollbar": "rollbar"
+        "sources": {
+          "rollbar": "rollbar"
+        }
       }
     }
   }

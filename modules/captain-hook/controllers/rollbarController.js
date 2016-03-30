@@ -18,7 +18,7 @@ module.exports = function(log, meatGrinderCommunicator, config) {
     log.info(`Triggered Rollbar Webhook (${body.event_name})`);
 
     // pass the data to grinder through pubsub
-    meatGrinderCommunicator.grind(config.get('pubsub:channels:parser:rollbar'), body);
+    meatGrinderCommunicator.grind(config.get('pubsub:channels:parser:sources:rollbar'), body);
   }
 
   return function(req, res, next) {

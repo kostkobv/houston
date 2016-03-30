@@ -1,7 +1,8 @@
 {
   "libs": [
     {
-      "name": "ioredis",
+      "name": "redis",
+      "path": "ioredis",
       "options": {
         "port": "${redis:port}",
         "host": "${redis:host}"
@@ -18,6 +19,7 @@
     }
   ],
   "module": [
-    "parsers"
+    "parsers",
+    "helpers"
   ]
 }

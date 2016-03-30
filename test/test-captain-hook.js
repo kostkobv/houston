@@ -115,7 +115,7 @@ describe('Captain Hook', () => {
 
       it('should be connected to seneca and trigger an event in pubsub', (done) => {
         const PARSER = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:name');
-        const ROLLBAR = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:rollbar');
+        const ROLLBAR = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:sources:rollbar');
         const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('routes:rollbar:webhook');
 
         seneca
@@ -124,8 +124,9 @@ describe('Captain Hook', () => {
             type: 'redis',
             pin: `role:${PARSER}`
           })
-          .add(`role:${PARSER},source:${ROLLBAR}`, (args, respond) => {
+          .add(`role:${PARSER}`, (args, respond) => {
             expect(args.data).to.deep.equal(ROLLBAR_DATA);
+            expect(args.source).to.equal(ROLLBAR);
             respond(null);
             seneca.close();
             done();

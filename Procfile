@@ -1,1 +1,1 @@
-web: NODE_ENV="staging" node app module rollbar
+web: NODE_ENV="staging" node app module captain-hook

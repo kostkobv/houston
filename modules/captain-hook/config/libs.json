@@ -13,6 +13,6 @@
   "module": [
     "controllers",
     "routes",
-    "helpers"
+    "communicators"
   ]
 }

@@ -7,6 +7,10 @@
         "host": "${redis:host}"
       }
     },
+    {
+      "name": "log",
+      "path": "winston"
+    },
     "http"
   ],
   "module": [

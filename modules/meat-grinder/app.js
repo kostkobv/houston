@@ -7,14 +7,16 @@
  * @param parser
  * @param seneca
  */
-module.exports = function(log, parser, seneca) {
+module.exports = function(log, parser, seneca, config) {
   log.info('Meat-grinder is up and ready to grind');
+
+  const PARSER_CHANNEL_NAME = config.get('pubsub:channels:parser:name');
 
   // seneca here is used as microservice framework with redis as pubsub server
   seneca
     .use('redis-transport')
     .listen({
       type: 'redis',
-      pin: 'parser:*'
+      pin: `role:${PARSER_CHANNEL_NAME}`
     });
 };

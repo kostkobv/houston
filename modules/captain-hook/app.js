@@ -31,6 +31,6 @@ module.exports = function(config, log, restify, routes, seneca) {
     .use('redis-transport')
     .client({
       type: 'redis',
-      pin: `role:${PARSER_CHANNEL_NAME},source:*`
+      pin: `role:${PARSER_CHANNEL_NAME}`
     });
 };
