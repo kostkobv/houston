@@ -4,7 +4,7 @@
   "description": "The Houston World Monitoring System!",
   "main": "app.js",
   "scripts": {
-    "test": "NODE_ENV='test' ./node_modules/.bin/mocha",
+    "test": "NODE_ENV='test' ./node_modules/.bin/mocha --harmony_destructuring --harmony_default_parameters",
     "develop": "./node_modules/.bin/pm2-dev pm2-houston.json",
     "lint": "./node_modules/.bin/eslint ./app/**/*.js ./modules/**/*.js ./test/**/*.js",
     "docs": "./node_modules/.bin/jsdoc ./app ./modules ./app.js -d ./docs"

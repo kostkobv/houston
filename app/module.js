@@ -27,9 +27,8 @@ class HoustonModule {
    * @param moduleName - module name
    * @param modulePath - path where module is located. Default value is ${HOME_DIR}${MODULES_PATH}/${moduleName}
    */
-  constructor(moduleName, modulePath) {
-    // TODO: change to default function value after upgrade to Node 6
-    this._modulePath = modulePath || `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
+  constructor(moduleName, modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`) {
+    this._modulePath = modulePath;
     this._moduleConfigsPath = `${this._modulePath}${MODULE_CONFIG_DIR}`;
 
     try {
@@ -126,10 +125,8 @@ class HoustonModule {
    * @returns {*} - parsed options
    */
   _parseOptions(options) {
-    // TODO: use destructuring here after migration to Node 6
     for (const option of this._optionsIterator(options)) {
-      const key = option[0];
-      const value = option[1];
+      const [key, value] = option;
 
       options[key] = this._getFromGlobalConfig(value);
     }

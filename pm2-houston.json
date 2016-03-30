@@ -4,7 +4,7 @@
       "name"        : "captain-hook",
       "script"      : "app.js",
       "watch"       : true,
-      "node_args"   : ["--debug=5858", "app.js", "module", "captain-hook"],
+      "node_args"   : ["--debug=5858", "--harmony_destructuring", "--harmony_default_parameters", "app.js", "module", "captain-hook"],
       "merge_logs"  : true,
       "cwd"         : "./",
       "env": {
@@ -19,7 +19,7 @@
       "name"        : "meat-grinder",
       "script"      : "app.js",
       "watch"       : true,
-      "node_args"   : ["--debug=5859", "app.js", "module", "meat-grinder"],
+      "node_args"   : ["--debug=5859", "--harmony_destructuring", "--harmony_default_parameters", "app.js", "module", "meat-grinder"],
       "merge_logs"  : true,
       "cwd"         : "./",
       "env": {
