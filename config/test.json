@@ -1,3 +1,13 @@
 {
-  "redis": null
+  "redis": null,
+  "pubsub": {
+    "channels": {
+      "parser": {
+        "name": "parser",
+        "sources": {
+          "rollbar": "rollbar"
+        }
+      }
+    }
+  }
 }

@@ -12,7 +12,7 @@ module.exports = function parser(seneca, log, config, parseData, redisResolver) 
   seneca.add(`role:${PARSER_CHANNEL_NAME}`, (args, done) => {
     const { source, data } = args;
 
-    log.info('Got Rollbar data from Captain Hook!');
+    log.info(`Got ${source} data from Captain Hook!`);
 
     try {
       log.info(`Passing data from ${source} for parsing`);

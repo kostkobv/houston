@@ -8,7 +8,8 @@
       "parser": {
         "name": "parser",
         "sources": {
-          "rollbar": "rollbar"
+          "rollbar-1": "rollbar",
+          "rollbar-2": "rollbar"
         }
       }
     }

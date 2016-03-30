@@ -5,25 +5,24 @@
  *
  * @param log
  * @param meatGrinderCommunicator
- * @config configs
  * @returns {Function} - controller itself
  */
-module.exports = function(log, meatGrinderCommunicator, config) {
+module.exports = function(log, meatGrinderCommunicator) {
   /**
    * Passes the request body to meat-grinder
    *
    * @param body - request body
    */
-  function proceedRequest(body){
-    log.info(`Triggered Rollbar Webhook (${body.event_name})`);
+  function proceedRequest(body, source){
+    log.info(`Triggered ${source} Webhook (${body.event_name})`);
 
     // pass the data to grinder through pubsub
-    meatGrinderCommunicator.grind(config.get('pubsub:channels:parser:sources:rollbar'), body);
+    meatGrinderCommunicator.grind(source, body);
   }
 
-  return function(req, res, next) {
+  return function(req, res, next, key) {
     if (req.body) {
-      proceedRequest(req.body);
+      proceedRequest(req.body, key);
     }
 
     // no content here

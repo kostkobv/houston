@@ -116,7 +116,7 @@ describe('Captain Hook', () => {
       it('should be connected to seneca and trigger an event in pubsub', (done) => {
         const PARSER = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:name');
         const ROLLBAR = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:sources:rollbar');
-        const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('routes:rollbar:webhook');
+        const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('routes:webhooks:rollbar');
 
         seneca
           .use('redis-transport')
