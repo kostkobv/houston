@@ -47,6 +47,7 @@ module.exports = function parseData(log, config) {
       let parsedData = {};
       const scheme = this._config.get(`parsers:schemes:${this._source}`);
 
+      //noinspection JSAnnotator
       for (const [key, value] of this._parseDataFactory(scheme)) {
         parsedData[key] = value;
       }
@@ -67,9 +68,10 @@ module.exports = function parseData(log, config) {
         let resolvedPath;
 
         if (path === Object(path)) {
+          // path is nested object
           let nestedObject = {};
 
-          // path is nested object
+          //noinspection JSAnnotator
           for (const [nestedKey, value] of this._parseDataFactory(path)) {
             nestedObject[nestedKey] = value;
           }
