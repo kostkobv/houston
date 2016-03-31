@@ -12,9 +12,10 @@ module.exports = function(log, meatGrinderCommunicator) {
    * Passes the request body to meat-grinder
    *
    * @param body - request body
+   * @param source - channel name
    */
   function proceedRequest(body, source){
-    log.info(`Triggered ${source} Webhook (${body.event_name})`);
+    log.info(`Triggered ${source} Webhook`);
 
     // pass the data to grinder through pubsub
     meatGrinderCommunicator.grind(source, body);

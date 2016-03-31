@@ -1,16 +1,8 @@
 {
-  "redis": {
-    "host": "localhost",
-    "port": "6379"
-  },
   "pubsub": {
     "channels": {
       "parser": {
-        "name": "parser",
-        "sources": {
-          "rollbar-1": "rollbar",
-          "rollbar-2": "rollbar"
-        }
+        "name": "parser"
       }
     }
   }

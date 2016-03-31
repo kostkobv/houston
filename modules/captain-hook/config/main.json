@@ -1,8 +1,3 @@
 {
-  "routes": {
-    "webhooks": {
-      "rollbar-1": "/rollbar-1/webhook",
-      "rollbar-2": "/rollbar-2/webhook"
-    }
-  }
+
 }

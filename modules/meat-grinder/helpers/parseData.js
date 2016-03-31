@@ -29,8 +29,7 @@ module.exports = function parseData(log, config) {
      * @private
      */
     _getSource(channel) {
-      const channelsName = this._config.get('pubsub:channels:parser:sources');
-      const source = channelsName ? channelsName[channel] : undefined;
+      const source = this._config.get(`data-sources:${channel}:type`);
 
       if (source === undefined) {
         throw new Error('Message from unknown source. Shouldn\'t be here');

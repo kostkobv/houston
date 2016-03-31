@@ -1,13 +1,23 @@
 {
-  "redis": null,
+  "redis": {
+    "host": "localhost",
+    "port": "6379"
+  },
   "pubsub": {
     "channels": {
       "parser": {
-        "name": "parser",
-        "sources": {
-          "rollbar": "rollbar"
-        }
+        "name": "parser1"
       }
+    }
+  },
+  "data-sources": {
+    "test": {
+      "type": "rollbar",
+      "endpoint": "/test/rollbar"
+    },
+    "test1": {
+      "type": "rollbar",
+      "endpoint": "/test/rollbar"
     }
   }
 }

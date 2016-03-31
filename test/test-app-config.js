@@ -33,7 +33,7 @@ describe('Module Configs', () => {
       const globalMainFilePath = this.configInstance.stores.default.file;
 
       expect(globalMainFilePath).be.equal(`${PROJECT_DIR}/config/test.json`);
-      return expect(this.configInstance.get('redis')).be.null;
+      expect(this.configInstance.get('pubsub:channels:parser:name')).be.equal('parser1');
     });
   });
 });

@@ -1,5 +1,16 @@
 {
   "redis": {
+    "host": "localhost",
     "port": "6379"
+  },
+  "data-sources": {
+    "rollbar-1": {
+      "type": "rollbar",
+      "endpoint": "/rollbar-1/webhook"
+    },
+    "rollbar-2": {
+      "type": "rollbar",
+      "endpoint": "/rollbar-2/webhook"
+    }
   }
 }

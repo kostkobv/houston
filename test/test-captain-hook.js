@@ -100,49 +100,60 @@ describe('Captain Hook', () => {
   });
 
   describe('Server', () => {
-    describe('Rollbar', () => {
-      it('should have /rollbar/webhook registered endpoint', (done) => {
-        this.request
-          .post('/rollbar/webhook')
-          .send(ROLLBAR_DATA)
-          .expect(204)
-          .end((err) => {
-            expect(err).to.be.equal(null);
+    it('should register endpoints from configs', (done) => {
+      const dataSources = this.testModule._moduleConfigsBundle.get('data-sources');
+      const promises = [];
 
-            done();
-          });
+      for (const source of Object.keys(dataSources)) {
+        const promise = new Promise((resolve) => {
+          this.request
+            .post(dataSources[source].endpoint)
+            .send()
+            .expect(204)
+            .end((err) => {
+              expect(err).to.be.equal(null);
+
+              resolve();
+            });
+        });
+
+        promises.push(promise);
+      }
+
+      Promise.all(promises).then(() => {
+        done();
       });
+    });
 
-      it('should be connected to seneca and trigger an event in pubsub', (done) => {
-        const PARSER = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:name');
-        const ROLLBAR = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:sources:rollbar');
-        const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('routes:webhooks:rollbar');
+    it('should pass the data through the pubsub channel from configs', (done) => {
+      const PARSER = this.testModule._moduleConfigsBundle.get('pubsub:channels:parser:name');
+      const ROLLBAR = 'test';
+      const ROLLBAR_WEBHOOK_PATH = this.testModule._moduleConfigsBundle.get('data-sources:test:endpoint');
 
-        seneca
-          .use('redis-transport')
-          .listen({
-            type: 'redis',
-            pin: `role:${PARSER}`
-          })
-          .add(`role:${PARSER}`, (args, respond) => {
-            expect(args.data).to.deep.equal(ROLLBAR_DATA);
-            expect(args.source).to.equal(ROLLBAR);
-            respond(null);
-            seneca.close();
-            done();
-          })
-          .ready((err) => {
-            expect(err).to.be.equal(undefined);
+      seneca
+        .use('redis-transport')
+        .listen({
+          type: 'redis',
+          pin: `role:${PARSER}`
+        })
+        .add(`role:${PARSER}`, (args, respond) => {
+          expect(args.data).to.deep.equal(ROLLBAR_DATA);
+          expect(args.source).to.equal(ROLLBAR);
+          respond(null);
+          seneca.close();
+          done();
+        })
+        .ready((err) => {
+          expect(err).to.be.equal(undefined);
 
-            this.request
-              .post(ROLLBAR_WEBHOOK_PATH)
-              .send(ROLLBAR_DATA)
-              .expect(204)
-              .end((error) => {
-                expect(error).to.be.equal(null);
-              });
-          });
-      });
+          this.request
+            .post(ROLLBAR_WEBHOOK_PATH)
+            .send(ROLLBAR_DATA)
+            .expect(204)
+            .end((error) => {
+              expect(error).to.be.equal(null);
+            });
+        });
     });
   });
 });
