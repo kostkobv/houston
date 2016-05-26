@@ -1,7 +1,8 @@
 {
   "libs": [
     {
-      "name": "ioredis",
+      "name": "redis",
+      "path": "ioredis",
       "options": {
         "port": "${redis:port}",
         "host": "${redis:host}"
@@ -11,9 +12,14 @@
       "name": "log",
       "path": "winston"
     },
-    "http"
+    "os",
+    {
+      "name": "seneca",
+      "options": {}
+    }
   ],
   "module": [
-    "services"
+    "parsers",
+    "helpers"
   ]
 }

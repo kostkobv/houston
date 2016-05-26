@@ -1,0 +1,18 @@
+{
+  "libs": [
+    {
+      "name": "log",
+      "path": "winston"
+    },
+    {
+      "name": "seneca",
+      "options": {}
+    },
+    "restify"
+  ],
+  "module": [
+    "controllers",
+    "routes",
+    "communicators"
+  ]
+}

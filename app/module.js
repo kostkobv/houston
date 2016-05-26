@@ -27,9 +27,8 @@ class HoustonModule {
    * @param moduleName - module name
    * @param modulePath - path where module is located. Default value is ${HOME_DIR}${MODULES_PATH}/${moduleName}
    */
-  constructor(moduleName, modulePath) {
-    // TODO: change to default function value after upgrade to Node 6
-    this._modulePath = modulePath || `${HOME_DIR}${MODULES_PATH}/${moduleName}`;
+  constructor(moduleName, modulePath = `${HOME_DIR}${MODULES_PATH}/${moduleName}`) {
+    this._modulePath = modulePath;
     this._moduleConfigsPath = `${this._modulePath}${MODULE_CONFIG_DIR}`;
 
     try {
@@ -37,7 +36,6 @@ class HoustonModule {
     } catch (error) {
       log.info(error.name, `Module does not have dependency file (${error.message})`);
     }
-
 
     this._createDependableContainer();
     this._createConfigBundle();
@@ -59,6 +57,11 @@ class HoustonModule {
    * into MODULE_LIBS_FILE(module object) and passes it to dependencies container
    */
   _registerModuleFiles() {
+    if (!this._libList[MODULE_FILES_LIST]) {
+      log.info('Module additional files not registered.');
+      return;
+    }
+
     for (const moduleFolder of this._libList[MODULE_FILES_LIST]) {
       try {
         this._container.load(`${this._modulePath}/${moduleFolder}`);
@@ -75,7 +78,11 @@ class HoustonModule {
   _registerModuleLibraries() {
     try {
       for (const lib of this._libList[MODULE_LIBRARIES_LIST]) {
-        this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
+        if (typeof lib === 'string') {
+          this._registerLibrary(lib, lib);
+        } else {
+          this._registerLibrary(lib.name, lib.path || lib.name, lib.options);
+        }
       }
     } catch (error) {
       log.error(error.name, `Can't register libraries (${error.message})`);
@@ -118,10 +125,8 @@ class HoustonModule {
    * @returns {*} - parsed options
    */
   _parseOptions(options) {
-    // TODO: use destructuring here after migration to Node 6
     for (const option of this._optionsIterator(options)) {
-      const key = option[0];
-      const value = option[1];
+      const [key, value] = option;
 
       options[key] = this._getFromGlobalConfig(value);
     }
@@ -178,16 +183,20 @@ class HoustonModule {
       this._addConfigsFileToBundle(
         `${moduleName}${env.charAt(0).toUpperCase() + env.slice(1)}`,
         `${this._moduleConfigsPath}/${env}.json`);
-
-      this._addConfigsFileToBundle(`${moduleName}`, `${this._moduleConfigsPath}/main.json`);
-
-      this._moduleConfigsBundle.load();
-
-      // passing it to container as config dep
-      this._container.register('config', this._moduleConfigsBundle);
     } catch (error) {
-      log.error(error.name, `Missing or broken configs (${error.message})`);
+      log.error(error.name, `Missing or broken env configuration file (${error.message})`);
     }
+
+    try {
+      this._addConfigsFileToBundle(`${moduleName}`, `${this._moduleConfigsPath}/main.json`);
+    } catch (error) {
+      log.error(error.name, `Missing or broken main module configuration file (${error.message})`);
+    }
+
+    this._moduleConfigsBundle.load();
+
+    // passing it to container as config dep
+    this._container.register('config', this._moduleConfigsBundle);
   }
 
   /**

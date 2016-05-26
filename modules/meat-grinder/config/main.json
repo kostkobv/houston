@@ -1,0 +1,15 @@
+{
+  "parsers": {
+    "split-symbol": ":",
+    "schemes": {
+      "rollbar": {
+        "name": "event_name",
+        "date": "data:item:last_activated_timestamp",
+        "data": {
+          "env": "data:item:environment",
+          "title": "data:item:title"
+        }
+      }
+    }
+  }
+}
